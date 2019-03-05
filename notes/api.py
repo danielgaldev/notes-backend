@@ -1,10 +1,11 @@
-from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics
 from rest_framework.response import Response
+
 from knox.models import AuthToken
 
-from .models import Note
-from .serializers import NoteSerializer, CreateUserSerializer, UserSerializer, LoginUserSerializer
+from .serializers import (NoteSerializer, CreateUserSerializer,
+                          UserSerializer, LoginUserSerializer)
+
 
 class NoteViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, ]
@@ -25,8 +26,8 @@ class RegistrationAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response({
-            'user': UserSerializer(user, context=self.get_serializer_context()).data,
-            'token': AuthToken.objects.create(user)
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)
         })
 
 
@@ -38,11 +39,8 @@ class LoginAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
         return Response({
-            'user': UserSerializer(
-                user,
-                context=self.get_serializer_context()
-            ).data,
-            'token': AuthToken.objects.create(user)
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)
         })
 
 
@@ -52,4 +50,3 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
- 
