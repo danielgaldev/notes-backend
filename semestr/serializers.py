@@ -3,19 +3,23 @@ from rest_framework import serializers
 from .models import Semester, Class, Requirement
 
 
-class SemesterSerializer(serializers.ModelSerializer):
+class RequirementSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Semester
+        model = Requirement
         fields = '__all__'
 
 
 class ClassSerializer(serializers.ModelSerializer):
+    requirements = RequirementSerializer(many=True)
+    
     class Meta:
         model = Class
         fields = '__all__'
 
 
-class RequirementSerializer(serializers.ModelSerializer):
+class SemesterSerializer(serializers.ModelSerializer):
+    classes = ClassSerializer(many=True)
+
     class Meta:
-        model = Requirement
+        model = Semester
         fields = '__all__'

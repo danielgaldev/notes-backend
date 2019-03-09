@@ -11,7 +11,8 @@ class Semester(models.Model):
 class Class(models.Model):
     name = models.TextField(max_length=50)
     credit = models.IntegerField()
-    parent_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    parent_semester = models.ForeignKey(
+        Semester, related_name='classes', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -20,7 +21,8 @@ class Class(models.Model):
 class Requirement(models.Model):
     name = models.TextField()
     due = models.DateField(auto_now_add=False)
-    parent_class = models.ForeignKey(Class, on_delete=models.CASCADE)
+    parent_class = models.ForeignKey(
+        Class, related_name='requirements', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
