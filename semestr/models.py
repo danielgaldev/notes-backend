@@ -1,8 +1,10 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Semester(models.Model):
     number = models.IntegerField()
+    owner = models.ForeignKey(
+        User, related_name='semesters', on_delete=models.CASCADE)
 
     def __str__(self):
         return ''.join([str(self.number), '. semester'])
