@@ -22,7 +22,7 @@ class ClassSerializer(serializers.ModelSerializer):
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Semester
-        fields = ('number',)
+        fields = ('number', 'id')
 
 
 class SemesterDetailSerializer(serializers.ModelSerializer):
