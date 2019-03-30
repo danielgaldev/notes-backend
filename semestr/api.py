@@ -1,5 +1,4 @@
-from rest_framework import viewsets
-from rest_framework import viewsets, permissions, generics
+from rest_framework import viewsets, permissions, generics, mixins
 from rest_framework.response import Response
 
 from . import models
@@ -39,7 +38,12 @@ class RequirementAPI(viewsets.ModelViewSet):
 
 class UserAPI(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = serializers.UserSerializer
+    serializer_class = serializers.LoginUserSerializer
 
     def get_object(self):
         return self.request.user
+
+
+class RegisterAPI(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny, ]
+    serializer_class = serializers.RegisterUserSerializer

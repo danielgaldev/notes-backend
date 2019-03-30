@@ -38,23 +38,21 @@ class SemesterDetailSerializer(serializers.ModelSerializer):
 #########################
 
 
-class CreateUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'password')
-        extra_kwargs = {'password': {'write_only': True}}
+class RegisterUserSerializer(serializers.ModelSerializer):
+
+    password = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'],
-                                        None,
-                                        validated_data['password'])
+        user = User.objects.create(
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
         return user
 
-
-class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username')
+        fields = ( "id", "username", "password", )
 
 
 class LoginUserSerializer(serializers.Serializer):
@@ -66,4 +64,5 @@ class LoginUserSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError(
-            "Unable to log in with provided credentials.")
+            "Unable to log in with provided credentials."
+        )
