@@ -1,5 +1,6 @@
 from django.urls import include, path
 from rest_framework_nested import routers
+from rest_framework.authtoken.views import obtain_auth_token
 
 from . import api
 
@@ -14,7 +15,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(semesters_router.urls)),
     path('', include(classes_router.urls)),
-    path('auth/register/', api.RegistrationAPI.as_view(), name='register'),
-    path('auth/login/', api.LoginAPI.as_view(), name='login'),
+    path('auth/login/', obtain_auth_token, name='login'),
     path('auth/user/', api.UserAPI.as_view(), name='user')
 ]
