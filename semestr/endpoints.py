@@ -15,7 +15,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(semesters_router.urls)),
     path('', include(classes_router.urls)),
-    path('auth/login/', obtain_auth_token, name='login'),
+    path('auth/login/', api.LoginAPI.as_view(), name='login'),
+    path('auth/logout/', api.LogoutAPI.as_view(), name='logout'),
     path('auth/user/', api.UserAPI.as_view(), name='user'),
     path('auth/register/', api.RegisterAPI.as_view(), name='register')
 ]

@@ -66,3 +66,9 @@ class LoginUserSerializer(serializers.Serializer):
         raise serializers.ValidationError(
             "Unable to log in with provided credentials."
         )
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', )
